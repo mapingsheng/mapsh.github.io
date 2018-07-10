@@ -1,0 +1,673 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="spring," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="soujava" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在qq群里面有很多童鞋经常提出一些问题，我搭建的spring框架示例怎么启动不起来？spring入门示例谁有？等等问题。所以就写了这篇文章，绝对手把手讲解啊！
+一、准备1、spring版本：spring-framework-3.1.1.RELEASE
+2、jar包：spring包下面的dist文件夹下的所有jar包
+
+3、第三方jar包：    jsp标签包：jstl-api-1.2.jar、st">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring3.1.1入门讲解一(非注解篇)">
+<meta property="og:url" content="http://www.soujava.com/spring3-1-1入门讲解一-非注解篇/index.html">
+<meta property="og:site_name" content="soujava">
+<meta property="og:description" content="在qq群里面有很多童鞋经常提出一些问题，我搭建的spring框架示例怎么启动不起来？spring入门示例谁有？等等问题。所以就写了这篇文章，绝对手把手讲解啊！
+一、准备1、spring版本：spring-framework-3.1.1.RELEASE
+2、jar包：spring包下面的dist文件夹下的所有jar包
+
+3、第三方jar包：    jsp标签包：jstl-api-1.2.jar、st">
+<meta property="og:image" content="http://soujava.com/images/spring1.jpg">
+<meta property="og:image" content="http://soujava.com/images/spring2.png">
+<meta property="og:image" content="http://soujava.com/images/spring3.jpg">
+<meta property="og:updated_time" content="2018-07-08T09:37:48.556Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring3.1.1入门讲解一(非注解篇)">
+<meta name="twitter:description" content="在qq群里面有很多童鞋经常提出一些问题，我搭建的spring框架示例怎么启动不起来？spring入门示例谁有？等等问题。所以就写了这篇文章，绝对手把手讲解啊！
+一、准备1、spring版本：spring-framework-3.1.1.RELEASE
+2、jar包：spring包下面的dist文件夹下的所有jar包
+
+3、第三方jar包：    jsp标签包：jstl-api-1.2.jar、st">
+<meta name="twitter:image" content="http://soujava.com/images/spring1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.soujava.com/spring3-1-1入门讲解一-非注解篇/"/>
+
+  <title> spring3.1.1入门讲解一(非注解篇) | soujava </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">soujava</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">记录未知的，牢记已知的</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                spring3.1.1入门讲解一(非注解篇)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-12T13:43:45+08:00" content="2016-09-12">
+              2016-09-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/spring/" itemprop="url" rel="index">
+                    <span itemprop="name">spring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在qq群里面有很多童鞋经常提出一些问题，我搭建的spring框架示例怎么启动不起来？spring入门示例谁有？等等问题。所以就写了这篇文章，绝对手把手讲解啊！</p>
+<h3 id="一、准备"><a href="#一、准备" class="headerlink" title="一、准备"></a>一、准备</h3><p>1、spring版本：spring-framework-3.1.1.RELEASE</p>
+<p>2、jar包：spring包下面的dist文件夹下的所有jar包</p>
+<p><img src="http://soujava.com/images/spring1.jpg" alt=""></p>
+<p>3、第三方jar包：<br>    jsp标签包：jstl-api-1.2.jar、standard.jar</p>
+<pre><code>日志包：commons-logging-1.0.4.jar
+</code></pre><h3 id="二、环境搭建"><a href="#二、环境搭建" class="headerlink" title="二、环境搭建"></a>二、环境搭建</h3><p>1、新建Dynamic Web Project项目：spring</p>
+<p><img src="http://soujava.com/images/spring2.png" alt=""></p>
+<p>2、在web.xml文件中添加如下配置<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;servlet&gt;  </div><div class="line">    &lt;servlet-name&gt;spring&lt;/servlet-name&gt;  </div><div class="line">    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;  </div><div class="line">    &lt;init-param&gt;  </div><div class="line"> 	&lt;description&gt;加载/WEB-INF/spring-mvc/目录下的所有XML作为Spring MVC的配置文件&lt;/description&gt;  </div><div class="line"> 	&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;  </div><div class="line"> 	&lt;param-value&gt;/WEB-INF/spring-mvc*.xml&lt;/param-value&gt;  </div><div class="line"> &lt;/init-param&gt;  </div><div class="line">    	&lt;!-- load-on-startup：表示启动容器时初始化该Servlet --&gt;  </div><div class="line">    	&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;  </div><div class="line">	&lt;/servlet&gt;  </div><div class="line">	&lt;servlet-mapping&gt;  </div><div class="line">    &lt;servlet-name&gt;spring&lt;/servlet-name&gt;  </div><div class="line">    &lt;!-- url-pattern：表示哪些请求交给Spring Web MVC处理， "/"是用来定义默认servlet映射的。也可以如"*.action"表示拦截所有以action为扩展名的请求。 --&gt;  </div><div class="line">    &lt;url-pattern&gt;*.action&lt;/url-pattern&gt;  </div><div class="line">	&lt;/servlet-mapping&gt;</div></pre></td></tr></table></figure></p>
+<p>3、在WEB-INF目录下面创建spring-mvc.xml文件：（这里的文件需要在web.xml文件中进行配置的，详见第2步）<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">	&lt;?xml version="1.0" encoding="UTF-8"?&gt;  </div><div class="line">	&lt;beans xmlns="http://www.springframework.org/schema/beans"  </div><div class="line">	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  </div><div class="line">	    xmlns:context="http://www.springframework.org/schema/context"  </div><div class="line">	    xmlns:mvc="http://www.springframework.org/schema/mvc"  </div><div class="line">	    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd  </div><div class="line">	        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd  </div><div class="line">	        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd"&gt;  </div><div class="line">   </div><div class="line">    	&lt;bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" /&gt;  </div><div class="line">  </div><div class="line">	    &lt;!-- 表示所有实现了org.springframework.web.servlet.mvc.Controller接口的Bean可以作为Spring Web MVC中的处理器。如果需要其他类型的处理器可以通过实现HadlerAdapter来解决。--&gt;  </div><div class="line">	    &lt;bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" /&gt;  </div><div class="line">	      </div><div class="line">	     &lt;!-- InternalResourceViewResolver：用于支持Servlet、JSP视图解析；  </div><div class="line">	         viewClass：JstlView表示JSP模板页面需要使用JSTL标签库，classpath中必须包含jstl的相关jar包；  </div><div class="line">	         prefix和suffix：查找视图页面的前缀和后缀（前缀[逻辑视图名]后缀），比如传进来的逻辑视图名为hello，则该jsp视图页面应该存放在“view/hello.jsp”； --&gt;</div><div class="line">		 &lt;bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;  </div><div class="line">	        &lt;property name="viewClass" value="org.springframework.web.servlet.view.JstlView" /&gt;  </div><div class="line">	        &lt;property name="prefix" value="/view/" /&gt;  </div><div class="line">	        &lt;property name="suffix" value=".jsp" /&gt;  </div><div class="line">	    &lt;/bean&gt;</div><div class="line"></div><div class="line">		&lt;bean name="/hello" class="com.spring.mvc.HelloWorldController"/&gt;  </div><div class="line">		&lt;!--注意这里的类路径不要错了，如果不用注解的话，那么每当新建一个controller类就需要在这里配置一下 --&gt; </div><div class="line">  </div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
+<p>4、在src下面添加controller类：HelloWorldController.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.spring.mvc;  </div><div class="line"> </div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;  </div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;  </div><div class="line">  </div><div class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;  </div><div class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;  </div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;  </div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.Controller;  </div><div class="line">  </div><div class="line">  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldController</span> <span class="keyword">implements</span> <span class="title">Controller</span> </span>&#123;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">handleRequest</span><span class="params">(HttpServletRequest arg0, HttpServletResponse arg1)</span> <span class="keyword">throws</span> Exception </span>&#123;  </div><div class="line">          </div><div class="line">       HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();  </div><div class="line"></div><div class="line">        ModelAndView mv = <span class="keyword">new</span> ModelAndView();  </div><div class="line">        <span class="comment">// 添加模型数据，可以是任意的POJO对象  </span></div><div class="line">        mv.addObject(<span class="string">"message"</span>, <span class="string">"Hello World!"</span>);  </div><div class="line">        <span class="comment">// 设置逻辑视图名，视图解析器会根据该名字解析到具体的视图页面,即WebContent/view/hello.jsp  </span></div><div class="line">        mv.setViewName(<span class="string">"hello"</span>);  </div><div class="line">        <span class="keyword">return</span> mv;  </div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>4、在WebContent/view/目录下面添加hello.jsp页面<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;%@ page language="java" contentType="text/html; charset=utf-8"  </div><div class="line">   pageEncoding="utf-8"%&gt;  </div><div class="line">&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%&gt;  </div><div class="line">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;  </div><div class="line">&lt;html&gt;  </div><div class="line">    &lt;head&gt;  </div><div class="line">        &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;  </div><div class="line">        &lt;title&gt;Insert title here&lt;/title&gt;  </div><div class="line">    &lt;/head&gt;  </div><div class="line">    &lt;body&gt;  </div><div class="line">        $&#123;message&#125;  </div><div class="line">    &lt;/body&gt;  </div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>5、启动tomcat服务器，访问一下</p>
+<p><img src="http://soujava.com/images/spring3.jpg" alt=""></p>
+<p>注：我们的访问url中包括了/hello.action；当以.action为后缀的访问路径都将被DispatcherServlet拦截过滤（web.xml文件中已经配置），然后/hello前缀将被映射到HelloWorldController控制器处理（spring-mvc.xml文件中已经配置）</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/带附件的enctype表单中普通属性的获取/" rel="next" title="带附件的enctype表单中普通属性的获取">
+                <i class="fa fa-chevron-left"></i> 带附件的enctype表单中普通属性的获取
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/spring3-1-1入门讲解二-注解篇/" rel="prev" title="spring3.1.1入门讲解二(注解篇)">
+                spring3.1.1入门讲解二(注解篇) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="马平升" />
+          <p class="site-author-name" itemprop="name">马平升</p>
+          <p class="site-description motion-element" itemprop="description">记录未知的，牢记已知的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">77</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、准备"><span class="nav-number">1.</span> <span class="nav-text">一、准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、环境搭建"><span class="nav-number">2.</span> <span class="nav-text">二、环境搭建</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">马平升</span>
+</div>
+
+<div class="powered-by">
+  <a class="theme-link" href="http://www.soujava.com">soujava</a>
+</div>
+
+<div class="theme-info">
+  
+  <a class="theme-link" href="https://github.com/mapingsheng">
+    GitHub
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java8 Stream," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="soujava" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="最近在平时开发中越来越多的会用到java8新增的流处理功能Stream；用一次就上瘾的感觉啊！在处理一个稍微大一些的数据集合时（长度为10W的List">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java8中使用stream流和for循环分别对数据集合遍历的差异">
+<meta property="og:url" content="http://www.soujava.com/java8中使用stream流和for循环分别对数据集合遍历的差异/index.html">
+<meta property="og:site_name" content="soujava">
+<meta property="og:description" content="最近在平时开发中越来越多的会用到java8新增的流处理功能Stream；用一次就上瘾的感觉啊！在处理一个稍微大一些的数据集合时（长度为10W的List">
+<meta property="og:image" content="http://soujava.com/images/javaStream2.png">
+<meta property="og:updated_time" content="2018-07-08T09:37:48.529Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java8中使用stream流和for循环分别对数据集合遍历的差异">
+<meta name="twitter:description" content="最近在平时开发中越来越多的会用到java8新增的流处理功能Stream；用一次就上瘾的感觉啊！在处理一个稍微大一些的数据集合时（长度为10W的List">
+<meta name="twitter:image" content="http://soujava.com/images/javaStream2.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.soujava.com/java8中使用stream流和for循环分别对数据集合遍历的差异/"/>
+
+  <title> java8中使用stream流和for循环分别对数据集合遍历的差异 | soujava </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">soujava</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">记录未知的，牢记已知的</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java8中使用stream流和for循环分别对数据集合遍历的差异
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-31T09:44:41+08:00" content="2016-08-31">
+              2016-08-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在平时开发中越来越多的会用到java8新增的流处理功能Stream；用一次就上瘾的感觉啊！在处理一个稍微大一些的数据集合时（长度为10W的List<map<string,object>&gt;）,刚好对比一下用java8的stream遍历集合和用java的for循环遍历集合的效率差异！</map<string,object></p>
+<h3 id="一、分别比较用两种方式遍历集合并输出集合中元素的效率-不在循环中加工组装集合数据"><a href="#一、分别比较用两种方式遍历集合并输出集合中元素的效率-不在循环中加工组装集合数据" class="headerlink" title="一、分别比较用两种方式遍历集合并输出集合中元素的效率(不在循环中加工组装集合数据)"></a>一、分别比较用两种方式遍历集合并输出集合中元素的效率(不在循环中加工组装集合数据)</h3><p><strong>1、声明个长度为10W的集合</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">List&lt;Map&lt;String,Object&gt;&gt; listMap = <span class="keyword">new</span> ArrayList&lt;Map&lt;String,Object&gt;&gt;();</div><div class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100000</span>;i++)&#123;</div><div class="line">   	Map&lt;String,Object&gt; map = <span class="keyword">new</span> HashMap&lt;String,Object&gt;();</div><div class="line">    map.put(<span class="string">"id"</span>, i);</div><div class="line">    map.put(<span class="string">"title"</span>, <span class="string">"title"</span>+i);</div><div class="line">    map.put(<span class="string">"view"</span>, <span class="string">"view"</span>+i);</div><div class="line">    listMap.add(map);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p><strong>2、使用java8的stream的forEach遍历集合并输出</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">listMap.stream().forEach(p -&gt; System.out.println(p.get(<span class="string">"id"</span>)+<span class="string">" "</span>+p.get(<span class="string">"title"</span>)));</div></pre></td></tr></table></figure></p>
+<p>控制台打印内容如下：花费1582毫秒<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">..... ..........</div><div class="line"><span class="number">99996</span> title99996</div><div class="line"><span class="number">99997</span> title99997</div><div class="line"><span class="number">99998</span> title99998</div><div class="line"><span class="number">99999</span> title99999</div><div class="line">花费时间：<span class="number">1582</span></div></pre></td></tr></table></figure></p>
+<p><strong>3、使用for循环遍历集合并输出</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(Map map:listMap)&#123;</div><div class="line">   System.out.println(map.get(<span class="string">"id"</span>)+<span class="string">" "</span>+map.get(<span class="string">"title"</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>控制台打印内容如下：花费1548毫秒<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="number">99995</span> title99995</div><div class="line"><span class="number">99996</span> title99996</div><div class="line"><span class="number">99997</span> title99997</div><div class="line"><span class="number">99998</span> title99998</div><div class="line"><span class="number">99999</span> title99999</div><div class="line">花费时间：<span class="number">1548</span></div></pre></td></tr></table></figure></p>
+<p><strong>4、小结</strong></p>
+<p> 长度为1W时：  for循环【170毫秒】    stram循环 【240毫秒】</p>
+<p> 长度为10W时： for循环【1548毫秒】    stram循环【1582毫秒】</p>
+<p> 长度为100W时：for循环【21099毫秒】   stram循环【20291毫秒】</p>
+<p> 所以个人经过上面的测试发现其实两种方式去遍历集合的效率是差不多的！</p>
+<h3 id="二、分别比较用两种方式遍历集合并输出集合中元素的效率-在循环中加工组装集合数据"><a href="#二、分别比较用两种方式遍历集合并输出集合中元素的效率-在循环中加工组装集合数据" class="headerlink" title="二、分别比较用两种方式遍历集合并输出集合中元素的效率(在循环中加工组装集合数据)"></a>二、分别比较用两种方式遍历集合并输出集合中元素的效率(在循环中加工组装集合数据)</h3><p><strong>1、声明个长度为10W的集合</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">List&lt;Map&lt;String,Object&gt;&gt; listMap = <span class="keyword">new</span> ArrayList&lt;Map&lt;String,Object&gt;&gt;();</div><div class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100000</span>;i++)&#123;</div><div class="line">   	Map&lt;String,Object&gt; map = <span class="keyword">new</span> HashMap&lt;String,Object&gt;();</div><div class="line">    map.put(<span class="string">"id"</span>, i);</div><div class="line">    map.put(<span class="string">"title"</span>, <span class="string">"title"</span>+i);</div><div class="line">    map.put(<span class="string">"view"</span>, <span class="string">"view"</span>+i);</div><div class="line">    listMap.add(map);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p><strong>2、声明个长度为2的集合</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//该集合中的key键就是上面长度为10W集合中的id的值</span></div><div class="line">Map&lt;String,Object&gt; mapTop = <span class="keyword">new</span> HashMap&lt;String,Object&gt;();</div><div class="line">   mapTop.put(<span class="string">"10"</span>, <span class="string">"1"</span>);</div><div class="line">   mapTop.put(<span class="string">"90"</span>, <span class="string">"0"</span>);</div></pre></td></tr></table></figure></p>
+<p>接下来我们分别用for循环和stream流循环遍历集合并且在遍历过程中向集合中追加一个新的键值对数据top:XX;</p>
+<p><strong>3、用java8的stream流遍历</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">listMap.stream().map((s)-&gt;&#123;</div><div class="line">			<span class="keyword">return</span> s.put(<span class="string">"top"</span>,mapTop.get(String.valueOf(s.get(<span class="string">"id"</span>))));</div><div class="line">		&#125;).collect(Collectors.toList());</div></pre></td></tr></table></figure></p>
+<p>上面的代码中我们通过stream流中的map进行数据追加：<br>追加前的集合数据结构：[{view=view0,id=0, title=title0},{view=view0,id=10, title=title0},…]<br>追加后的集合数据结构：[{view=view0, top=null, id=0, title=title0},{view=view10, top=1, id=10, title=title10},…]</p>
+<p>花费时间：4641毫秒</p>
+<p><strong>4、用for循环遍历</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(Map map:listMap)&#123;</div><div class="line">   	map.put(<span class="string">"top"</span>, mapTop.get(String.valueOf(map.get(<span class="string">"id"</span>))));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>花费时间：5513毫秒</p>
+<p><strong>5、小结</strong></p>
+<p>当分别使用两种方式对同一集合进行遍历并且数据追加时，效率也是不相上下的，使用stream流循环稍微快那么一丁点！</p>
+<p>后来通过“科学上网”的方式，搜集到了一篇老外写的关于stream循环和for循环的文章，说的是意思是不应该用stream循环替换你的for循环！个人感觉这也因场景而定，不能一概而论，首先比如在循环过程中如果涉及复杂的数据装载和加工，那么个人感觉使用for循环比较好理解；反之则使用stream流的方式比较好；并且我们不能仅仅因为循环这一动作就下结论不太科学，比如stream的分组、过滤等等其他功能是for循环所不能及的！</p>
+<p><img src="http://soujava.com/images/javaStream2.png" alt="Alt text"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java8-Stream/" rel="tag">#java8 Stream</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/thymeleaf教程2-后台数据封装与页面渲染/" rel="next" title="thymeleaf教程2-后台数据封装与页面渲染">
+                <i class="fa fa-chevron-left"></i> thymeleaf教程2-后台数据封装与页面渲染
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/springBoot编写不同风格的restAPI接口/" rel="prev" title="springBoot编写不同风格的restAPI接口">
+                springBoot编写不同风格的restAPI接口 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="马平升" />
+          <p class="site-author-name" itemprop="name">马平升</p>
+          <p class="site-description motion-element" itemprop="description">记录未知的，牢记已知的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">77</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、分别比较用两种方式遍历集合并输出集合中元素的效率-不在循环中加工组装集合数据"><span class="nav-number">1.</span> <span class="nav-text">一、分别比较用两种方式遍历集合并输出集合中元素的效率(不在循环中加工组装集合数据)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、分别比较用两种方式遍历集合并输出集合中元素的效率-在循环中加工组装集合数据"><span class="nav-number">2.</span> <span class="nav-text">二、分别比较用两种方式遍历集合并输出集合中元素的效率(在循环中加工组装集合数据)</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">马平升</span>
+</div>
+
+<div class="powered-by">
+  <a class="theme-link" href="http://www.soujava.com">soujava</a>
+</div>
+
+<div class="theme-info">
+  
+  <a class="theme-link" href="https://github.com/mapingsheng">
+    GitHub
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

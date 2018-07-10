@@ -1,0 +1,680 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="thymeleaf," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="soujava" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="我们使用模板引擎的过程中，页面上面的数据肯定需要从后台传递过来，然后把数据装载到页面对应区域中，所以我们来看看如果把后台的数据在前端页面渲染。
+一、添加一个表单页面–登陆操作
+二、新建业务控制器(doLogin)–获取登陆表单中提交的数据123456789String username = request.getParameter(&quot;username&quot;);  	String password =">
+<meta property="og:type" content="article">
+<meta property="og:title" content="thymeleaf教程2-后台数据封装与页面渲染">
+<meta property="og:url" content="http://www.soujava.com/thymeleaf教程2-后台数据封装与页面渲染/index.html">
+<meta property="og:site_name" content="soujava">
+<meta property="og:description" content="我们使用模板引擎的过程中，页面上面的数据肯定需要从后台传递过来，然后把数据装载到页面对应区域中，所以我们来看看如果把后台的数据在前端页面渲染。
+一、添加一个表单页面–登陆操作
+二、新建业务控制器(doLogin)–获取登陆表单中提交的数据123456789String username = request.getParameter(&quot;username&quot;);  	String password =">
+<meta property="og:image" content="http://soujava.com/images/thy6.png">
+<meta property="og:image" content="http://soujava.com/images/thy7.png">
+<meta property="og:image" content="http://soujava.com/images/thy1.png">
+<meta property="og:image" content="http://soujava.com/images/thy2.png">
+<meta property="og:image" content="http://soujava.com/images/thy3.png">
+<meta property="og:image" content="http://soujava.com/images/thy4.png">
+<meta property="og:updated_time" content="2018-07-08T09:37:48.561Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="thymeleaf教程2-后台数据封装与页面渲染">
+<meta name="twitter:description" content="我们使用模板引擎的过程中，页面上面的数据肯定需要从后台传递过来，然后把数据装载到页面对应区域中，所以我们来看看如果把后台的数据在前端页面渲染。
+一、添加一个表单页面–登陆操作
+二、新建业务控制器(doLogin)–获取登陆表单中提交的数据123456789String username = request.getParameter(&quot;username&quot;);  	String password =">
+<meta name="twitter:image" content="http://soujava.com/images/thy6.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.soujava.com/thymeleaf教程2-后台数据封装与页面渲染/"/>
+
+  <title> thymeleaf教程2-后台数据封装与页面渲染 | soujava </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">soujava</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">记录未知的，牢记已知的</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                thymeleaf教程2-后台数据封装与页面渲染
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-23T16:32:50+08:00" content="2016-08-23">
+              2016-08-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/thymeleaf/" itemprop="url" rel="index">
+                    <span itemprop="name">thymeleaf</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们使用模板引擎的过程中，页面上面的数据肯定需要从后台传递过来，然后把数据装载到页面对应区域中，所以我们来看看如果把后台的数据在前端页面渲染。</p>
+<p><strong>一、添加一个表单页面–登陆操作</strong><br><img src="http://soujava.com/images/thy6.png" alt=""></p>
+<p><strong>二、新建业务控制器(doLogin)–获取登陆表单中提交的数据</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">String username = request.getParameter(<span class="string">"username"</span>);</div><div class="line">  	String password = request.getParameter(<span class="string">"password"</span>);</div><div class="line">  	<span class="comment">//实例化一个thymeleaf文本上下文</span></div><div class="line">      WebContext ctx = <span class="keyword">new</span> WebContext(request, response, servletContext, request.getLocale());</div><div class="line"><span class="comment">//将前端登陆表单页面提交过来的数据封装到thymeleaf上下文中</span></div><div class="line">      ctx.setVariable(<span class="string">"username"</span>, username);</div><div class="line">      ctx.setVariable(<span class="string">"password"</span>, password);</div><div class="line">      <span class="comment">//调用模板引擎转向到对应的模板页面--desc模板页面</span></div><div class="line">      templateEngine.process(<span class="string">"desc"</span>, ctx, response.getWriter());</div></pre></td></tr></table></figure></p>
+<p><strong>三、新建模板页面(desc)–显示doLogin控制器中封装的数据</strong></p>
+<p><img src="http://soujava.com/images/thy7.png" alt=""></p>
+<p><em>注：读取数据使用${XX}这种形式，是不是感觉很熟悉，EL表达式；而向页面html元素中渲染数据使用thymeleaf提供的标签th:text=”${XX}”这种形式。</em></p>
+<p><strong>四、编译工程项目–启动web服务器测试</strong></p>
+<p>1、在登陆表单中输入对应的用户名和密码，点击提交按钮<br><img src="http://soujava.com/images/thy1.png" alt=""></p>
+<p>1、可以看到提交表单后进入到doLogin控制器中，控制器获取数据并封装数据，然后转向到模板页面中渲染数据。<br><img src="http://soujava.com/images/thy2.png" alt=""></p>
+<p><strong>五、在控制器doLogin中封装一些稍微复杂的数据集-数组</strong></p>
+<p>1、我们声明一个类型数组，然后把数组封装到thymeleaf上下文中<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String[] types = &#123;<span class="string">"足球"</span>,<span class="string">"篮球"</span>,<span class="string">"羽毛球"</span>&#125;;</div><div class="line">   ctx.setVariable(<span class="string">"types"</span>, types);</div></pre></td></tr></table></figure></p>
+<p>2、在desc模板页面中遍历显示封装好的集合数据</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;p th:each="type : $&#123;types&#125;"&gt;</div><div class="line">   	&lt;span th:text="$&#123;type&#125;"&gt;&lt;/span&gt;</div><div class="line">   &lt;/p&gt;</div></pre></td></tr></table></figure>
+<p><em>注：上面渲染集合数据到模板页面的代码中我们采用了th:each的方法遍历数据，这是thymeleaf提供的，其实thymeleaf提供了非常多并且非常强大的方法，后续再一一说明。</em></p>
+<p>3、针对刚刚封装好的集合数据到页面测试一下</p>
+<p><img src="http://soujava.com/images/thy3.png" alt=""></p>
+<p><img src="http://soujava.com/images/thy4.png" alt=""></p>
+<p><strong>六、在控制器doLogin中封装一些稍微复杂的数据集-实体Bean</strong></p>
+<p>1、我们新建一个User的Bean实体<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</div><div class="line"> 	<span class="keyword">private</span> String firstName = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">private</span> String lastName = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">private</span> String nationality = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">private</span> Integer age = <span class="keyword">null</span>；</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(<span class="keyword">final</span> String firstName, <span class="keyword">final</span> String lastName, </span></span></div><div class="line">            <span class="keyword">final</span> String nationality, <span class="keyword">final</span> Integer age) &#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">        <span class="keyword">this</span>.firstName = firstName;</div><div class="line">        <span class="keyword">this</span>.lastName = lastName;</div><div class="line">        <span class="keyword">this</span>.nationality = nationality;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2、在我们的doLogin业务控制器中实例化该User实体bean，并且把bean数据实体封装到thymeleaf上下文中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">User user = <span class="keyword">new</span> User(<span class="string">"zhang"</span>,<span class="string">"san"</span>,<span class="string">"china"</span>,<span class="number">25</span>);</div><div class="line">      ctx.setVariable(<span class="string">"user"</span>, user);</div></pre></td></tr></table></figure>
+<p>3、在desc模板页面中显示封装好的User实体bean数据<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;p th:text="$&#123;user.firstName+':'+user.lastName+':'+user.nationality+':'+user.age&#125;"&gt;&lt;/p&gt;</div></pre></td></tr></table></figure></p>
+<p>注：我们在获取bean中的属性数据时，仍然采用EL表达式${user.firstName}的方式；然后将获取的数据显示到html元素中用th:text方法；只不过我们使用th:text时在中间使用了字符串拼接将多个属性拼接显示。</p>
+<p><strong>六、总结</strong></p>
+<p>1、我们在执行业务操作的时候，需要把后台的数据集封装到thymeleaf上下文中，我们可以封装组合各种我们需要的数据，如：字符串、集合、实体bean等等<br>2、通过thymeleaf模板引擎转向到对应的模板页面<br>3、用thymeleaf提供的方法渲染后台封装的数据到页面中</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/thymeleaf/" rel="tag">#thymeleaf</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/jquery获取单选按钮值的诡异之处/" rel="next" title="jquery获取单选按钮值的诡异之处">
+                <i class="fa fa-chevron-left"></i> jquery获取单选按钮值的诡异之处
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/java8中使用stream流和for循环分别对数据集合遍历的差异/" rel="prev" title="java8中使用stream流和for循环分别对数据集合遍历的差异">
+                java8中使用stream流和for循环分别对数据集合遍历的差异 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="马平升" />
+          <p class="site-author-name" itemprop="name">马平升</p>
+          <p class="site-description motion-element" itemprop="description">记录未知的，牢记已知的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">77</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">马平升</span>
+</div>
+
+<div class="powered-by">
+  <a class="theme-link" href="http://www.soujava.com">soujava</a>
+</div>
+
+<div class="theme-info">
+  
+  <a class="theme-link" href="https://github.com/mapingsheng">
+    GitHub
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>
